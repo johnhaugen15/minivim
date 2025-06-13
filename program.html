@@ -12,7 +12,7 @@ setValue(body_style, 'background', editor_background)
 setValue(body_style, 'color', font_color)
 setValue(body_style, 'fontSize', concatenateStrings(toString(font_size), 'px'))
 
-cursor_element = body_node.createElement('div')
+cursor_element = document.createElement('div')
 body_node.appendChild(cursor_element)
 cursor_style = getValue(cursor_element, 'style')
 setValue(cursor_style, 'height', concatenateStrings(toString(font_size), 'px'))

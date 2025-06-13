@@ -1,4 +1,4 @@
-<html><head></head><body><script>
+<script>
 
 font_size = 13
 character_width = 10
@@ -6,12 +6,16 @@ font_color = 'purple'
 editor_background = 'black'
 body_padding = 10
 
+command_mode = true
+
 body_node = getValue(document, 'body')
 body_style = getValue(body_node, 'style')
 setValue(body_style, 'background', editor_background)
 setValue(body_style, 'color', font_color)
 setValue(body_style, 'fontSize', concatenateStrings(toString(font_size), 'px'))
 
+    console.log(concatenateStrings(toString(font_size), 'px'))
+    
 cursor_element = document.createElement('div')
 body_node.appendChild(cursor_element)
 cursor_style = getValue(cursor_element, 'style')
@@ -22,8 +26,39 @@ setValue(cursor_style, 'position', 'absolute')
 setValue(cursor_style, 'top', concatenateStrings(toString(body_padding), 'px')) 
 setValue(cursor_style, 'left', concatenateStrings(toString(body_padding), 'px')) 
 
+body_node.addEventListener('keydown', executeAction)
+body_node.addEventListener('keyup', secondaryAction)
+
+function executeAction (keyEvent) {
+ keyPressed = keyEvent.key
+ if (areSame(command_mode, false)) {
+  
+  return
+ }
+ executeCommand(keyPressed)
+}
+
+function executeCommand (keyPressed) {
+ if (areSame(keyPressed, 'i')) {
+  command_mode = false
+  return
+ }
+}
+
+function secondaryAction (keyEvent) {
+ keyPressed = keyEvent.key
+ if (areSame(keyPressed, 'Escape')) {
+  command_mode = true
+  return
+ }
+}
 
 // utility
+
+function areSame (item1, item2) {
+ conditionMet = item1 === item2
+ return conditionMet
+}
 
 function getValue (objectItem, valueKey) {
  valueValue = objectItem[valueKey]
@@ -36,6 +71,7 @@ function setValue (objectItem, valueKey, valueValue) {
 
 function concatenateStrings (string1, string2) {
  concatenatedString = string1 + string2
+ return concatenatedString
 }
 
 function toString (numberItem) {
@@ -43,4 +79,4 @@ function toString (numberItem) {
  return asString
 }
 
-</script></body></html>
+</script>
